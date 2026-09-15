@@ -33,6 +33,8 @@ class AnalysisScreen extends StatefulWidget {
 
 class _AnalysisScreenState extends State<AnalysisScreen> {
   final TextEditingController _textController = TextEditingController();
+  bool _isLoading = false;
+  String? _analysisResult;
 
   @override
   void dispose() {
@@ -41,7 +43,27 @@ class _AnalysisScreenState extends State<AnalysisScreen> {
   }
 
   void _analyzeMessage() {
-    // Lógica del análisis de backend pendiente a implementar
+    // simulación para probar estados
+    if (_textController.text.trim().isEmpty) return;
+
+    setState(() {
+      _isLoading = true;
+      _analysisResult = null;
+    });
+
+    // simulacion de carga de respuesta
+    Future.delayed(const Duration(seconds: 2), () {
+      if (!mounted) return;
+      setState(() {
+        _isLoading = false;
+        _analysisResult =
+            '**Reporte de Análisis**\n\n'
+            '• **Nivel de Riesgo:** Alto\n'
+            '• **Tipo detectado:** Posible intento de Smishing / Phishing\n'
+            '• **Detalles:** Se detectó un enlace con estructura sospechosa y lenguaje de urgencia solicitando credenciales.\n'
+            '• **Recomendación:** No abrir el enlace ni ingresar ningún dato confidencial.';
+      });
+    });
   }
 
   @override
@@ -97,6 +119,7 @@ class _AnalysisScreenState extends State<AnalysisScreen> {
               controller: _textController,
               maxLines: 8,
               minLines: 4,
+              enabled: !_isLoading,
               decoration: InputDecoration(
                 hintText: 'Pega aquí el contenido del mensaje sospechoso...',
                 alignLabelWithHint: true,
@@ -109,7 +132,7 @@ class _AnalysisScreenState extends State<AnalysisScreen> {
             ),
             const SizedBox(height: 24),
             ElevatedButton.icon(
-              onPressed: _analyzeMessage,
+              onPressed: _isLoading ? null : _analyzeMessage,
               style: ElevatedButton.styleFrom(
                 padding: const EdgeInsets.symmetric(vertical: 16),
                 shape: RoundedRectangleBorder(
@@ -118,15 +141,81 @@ class _AnalysisScreenState extends State<AnalysisScreen> {
                 backgroundColor: theme.colorScheme.primary,
                 foregroundColor: theme.colorScheme.onPrimary,
               ),
-              icon: const Icon(Icons.security_outlined),
-              label: const Text(
-                'Analizar Mensaje',
-                style: TextStyle(
+              icon: _isLoading
+                  ? const SizedBox(
+                      width: 20,
+                      height: 20,
+                      child: CircularProgressIndicator(
+                        strokeWidth: 2.5,
+                        color: Colors.white,
+                      ),
+                    )
+                  : const Icon(Icons.security_outlined),
+              label: Text(
+                _isLoading ? 'Analizando mensaje...' : 'Analizar Mensaje',
+                style: const TextStyle(
                   fontSize: 16,
                   fontWeight: FontWeight.bold,
                 ),
               ),
             ),
+            if (_isLoading) ...[
+              const SizedBox(height: 32),
+              Center(
+                child: Column(
+                  children: [
+                    const CircularProgressIndicator(),
+                    const SizedBox(height: 16),
+                    Text(
+                      'Evaluando patrones e indicadores de riesgo...',
+                      style: theme.textTheme.bodyMedium?.copyWith(
+                        color: theme.colorScheme.onSurfaceVariant,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ],
+            if (_analysisResult != null) ...[
+              const SizedBox(height: 28),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    'Resultado del Análisis',
+                    style: theme.textTheme.titleMedium?.copyWith(
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  IconButton(
+                    icon: const Icon(Icons.clear, size: 20),
+                    tooltip: 'Limpiar resultado',
+                    onPressed: () {
+                      setState(() {
+                        _analysisResult = null;
+                      });
+                    },
+                  ),
+                ],
+              ),
+              const SizedBox(height: 8),
+              Container(
+                padding: const EdgeInsets.all(16),
+                decoration: BoxDecoration(
+                  color: theme.colorScheme.surfaceContainerHighest.withValues(alpha: 0.5),
+                  borderRadius: BorderRadius.circular(12),
+                  border: Border.all(
+                    color: theme.colorScheme.outlineVariant,
+                  ),
+                ),
+                child: SelectableText(
+                  _analysisResult!,
+                  style: theme.textTheme.bodyMedium?.copyWith(
+                    height: 1.5,
+                  ),
+                ),
+              ),
+            ],
           ],
         ),
       ),
