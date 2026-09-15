@@ -2,7 +2,7 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 
 class ApiService {
-  static const String _webhookUrl = 'https://n8n-myxz.srv1923337.hstgr.cloud/webhook/phishing-analysis';
+  static const String _webhookUrl = 'https://n8n-myxz.srv1923337.hstgr.cloud/webhook-test/phishing-analysis';
 
   static Future<String> analyzeText(String message) async {
     try {

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'api_service.dart';
 
 void main() {
   runApp(const PhishingAgentApp());
@@ -42,28 +43,41 @@ class _AnalysisScreenState extends State<AnalysisScreen> {
     super.dispose();
   }
 
-  void _analyzeMessage() {
-    // simulación para probar estados
-    if (_textController.text.trim().isEmpty) return;
+  Future<void> _analyzeMessage() async {
+    final message = _textController.text.trim();
+    if (message.isEmpty) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('Ingresa un mensaje para analizar.'),
+          backgroundColor: Colors.orange,
+        ),
+      );
+      return;
+    }
 
     setState(() {
       _isLoading = true;
       _analysisResult = null;
     });
 
-    // simulacion de carga de respuesta
-    Future.delayed(const Duration(seconds: 2), () {
+    try {
+      final result = await ApiService.analyzeText(message);
       if (!mounted) return;
       setState(() {
-        _isLoading = false;
-        _analysisResult =
-            '**Reporte de Análisis**\n\n'
-            '• **Nivel de Riesgo:** Alto\n'
-            '• **Tipo detectado:** Posible intento de Smishing / Phishing\n'
-            '• **Detalles:** Se detectó un enlace con estructura sospechosa y lenguaje de urgencia solicitando credenciales.\n'
-            '• **Recomendación:** No abrir el enlace ni ingresar ningún dato confidencial.';
+        _analysisResult = result;
       });
-    });
+    } catch (e) {
+      if (!mounted) return;
+      setState(() {
+        _analysisResult = 'Error inesperado al procesar el análisis.';
+      });
+    } finally {
+      if (mounted) {
+        setState(() {
+          _isLoading = false;
+        });
+      }
+    }
   }
 
   @override
