@@ -112,8 +112,7 @@ Al ejecutar el comando, Cloudflare mostrará en la terminal un enlace con el dom
 
 1. Importa el archivo `n8n_workflows/phishing_rag_pipeline.json` dentro de tu instancia de **n8n** (local o en la nube).
 2. Configura los credenciales/nodos de **Ollama Model** y **Ollama Embeddings** pegando la URL provista por el túnel de Cloudflare (`https://<SUBDOMINIO_ALEATORIO>.trycloudflare.com`).
-3. Carga el dataset `dataset/mobile-attack.json` dentro del flujo para la ingesta inicial.
-4. Activa el workflow y copia la **Production URL** generada en el nodo **Webhook**.
+3. Activa el workflow y copia la **Production URL** generada en el nodo **Webhook**.
 
 ---
 
