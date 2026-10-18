@@ -11,13 +11,13 @@ Prototipo experimental de un **Agente de Ciberseguridad Autónomo basado en IA A
 
 ## 📌 Tabla de Contenidos
 
-1. [Características Principales](#-Características-Principales)
-2. [Arquitectura del Sistema](#-arquitectura-del-sistema)
-3. [Organización de Carpetas Principales](#-organizacion-de-carpetas-principales)
-4. [Componentes Clave](#-componentes-clave)
+1. [Características Principales](#-características-principales)
+2. [Arquitectura del Sistema](https://github.com/JhonRainbow6/phishing_agent_app#%EF%B8%8F-arquitectura-del-sistema)
+3. [Organización de Carpetas Principales](https://github.com/JhonRainbow6/phishing_agent_app#-organizaci%C3%B3n-de-carpetas-principales)
+4. [Componentes Clave](https://github.com/JhonRainbow6/phishing_agent_app#%EF%B8%8F-componentes-clave)
 5. [Guía de Instalación y Despliegue](#-guía-de-instalación-y-despliegue)
 
-## Características Principales
+## 📖 Características Principales
 
 - **Análisis RAG en Tiempo Real:** Búsqueda semántica sobre 124 técnicas de la matriz MITRE ATT&CK for Mobile vectorizadas.
 - **Inferencia Dedicada:** Razonamiento mediante el modelo de lenguaje abierto **Llama 3.1 8B**.
