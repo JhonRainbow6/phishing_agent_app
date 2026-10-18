@@ -142,8 +142,3 @@ static const String _webhookUrl = '[https://tu-instancia-n8n.com/webhook/phishin
 flutter run
 ```
 
-Docente Director: Juan Guillermo Torres Hurtado
-
-Programa: Ingeniería de Sistemas y Computación
-
-Facultad: Facultad de Ingeniería, Universidad Católica de Colombia (Bogotá D.C.)
