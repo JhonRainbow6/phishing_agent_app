@@ -85,7 +85,7 @@ Instalar Ollama y descargar los modelos necesarios:
 ```bash
 curl -fsSL [https://ollama.com/install.sh](https://ollama.com/install.sh) | sh
 ollama pull llama3.1:8b
-ollama pull nomic-embed-text****
+ollama pull nomic-embed-text
 ```
 
 2. **Instalar Cloudflare CLI (`cloudflared`):**
